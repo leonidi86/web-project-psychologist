@@ -2,7 +2,6 @@
 
 <div class="jumbotron" style="background-color:PaleTurquoise">
  <body >
-<img src="static\images\psihology1.png" align="left"/>
 <br>
 <p>
         <h1 style="font-weight:bold">Психолог</h1>
