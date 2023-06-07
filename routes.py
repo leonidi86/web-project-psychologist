@@ -1,4 +1,4 @@
-from re import I
+import re
 from bottle import route, view, template, request, redirect
 from datetime import datetime
 from module1 import load_reviews_from_file, save_review_to_file
@@ -40,28 +40,32 @@ def about():
 def otzv():
     reviews = load_reviews_from_file()
 
-    if request.method == 'POST': #добавление информации отзывов
+    if request.method == 'POST':
         nickname = request.forms.get('nickname')
         review = request.forms.get('review')
         phone = request.forms.get('phone')
         email = request.forms.get('email')
         timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        new_review = {'nickname': nickname, 'review': review, 'phone': phone, email : 'email', 'timestamp':timestamp}
+
+        if len(review) > 300:
+            return "The description should not exceed 300 characters."
+
+        phone_pattern = re.compile(r'^\+7\d{10}$')
+        email_pattern = re.compile(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.(com|ru|org)$')
+
+        if not phone_pattern.match(phone):
+            return "Пожалуйста, введите действительный номер телефона."
+
+        if not email_pattern.match(email):
+            return "Пожалуйста, введите действительный адрес электронной почты."
+
+        new_review = {'nickname': nickname, 'review': review, 'phone': phone, 'email': email, 'timestamp': timestamp}
         save_review_to_file(new_review)
         reviews.append(new_review)
-          
 
     return template('otzv', reviews=reviews, year=datetime.now().year)
 
-
-          
-
-
-
-
-
-
-
+        
 def load_articles():
     # Здесь можно вставить код загрузки статей
     # из файла или другого источника данных
