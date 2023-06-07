@@ -44,8 +44,9 @@ def otzv():
         nickname = request.forms.get('nickname')
         review = request.forms.get('review')
         phone = request.forms.get('phone')
+        email = request.forms.get('email')
         timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        new_review = {'nickname': nickname, 'review': review, 'phone': phone, 'timestamp':timestamp}
+        new_review = {'nickname': nickname, 'review': review, 'phone': phone, email : 'email', 'timestamp':timestamp}
         save_review_to_file(new_review)
         reviews.append(new_review)
           
