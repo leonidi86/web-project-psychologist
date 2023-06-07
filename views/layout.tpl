@@ -18,13 +18,15 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a href="/" class="navbar-brand"><img src="static\images\logoza_ru_(2)-transformed.png"</a>
+                <a href="/" class="navbar-brand"><img src="/static/images/logoza_ru_(2)-transformed.png"</a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li><a href="/home" style="color:LightCyan; padding: 30px 25px; font-size: 16px"> Главная </a></li>
                     <li><a href="/about" style="color:LightCyan; padding: 30px 25px; font-size: 16px">Обо мне</a></li>
                     <li><a href="/contact" style="color:LightCyan; padding: 30px 25px; font-size: 16px">Контакты</a></li>
+                    <li><a href="/otzv" style="color:LightCyan; padding: 30px 25px; font-size: 16px">Отзывы</a></li>
+                    <li><a href="/articles" style="color:LightCyan; padding: 30px 25px; font-size: 16px">Полезные статьи</a></li> 
                 </ul>
             </div>
         </div>
