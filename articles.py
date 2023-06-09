@@ -1,29 +1,34 @@
+import json
+import io
 
-from datetime import datetime
+articles_FILE = 'articles.json'
 
-app = Flask(__name__)
+def save_article(article):
+    articles = load_articles()
+    articles.append(article)
+    with io.open(articles_FILE, 'w', encoding='utf-8') as f:
+        json.dump(articles, f, ensure_ascii=False)
 
-@app.route('/')
-def index():
-    articles = [
-        {
-            'author': 'Имя автора 1',
-            'text': 'Текст статьи 1',
-            'date': 'Дата написания 1'
-        },
-        {
-            'author': 'Имя автора 2',
-            'text': 'Текст статьи 2',
-            'date': 'Дата написания 2'
-        },
-        {
-            'author': 'Имя автора 3',
-            'text': 'Текст статьи 3',
-            'date': 'Дата написания 3'
-        }
-    ]
+def load_articles():
+    try:
+        with io.open(articles_FILE, 'r', encoding='utf-8') as f:
+            articles = json.load(f)
+    except FileNotFoundError:
+        articles = []
+    return articles
 
-    return render_template('articles.tpl', title='Полезные статьи', year=datetime.now().year, articles=articles)
+def save_article_to_file(article):
+    with io.open(articles_FILE, 'a', encoding='utf-8') as file:
+        file.write(json.dumps(article, ensure_ascii=False))
+        file.write('\n')
 
-if __name__ == '__main__':
-    app.run()
+def load_articles_from_file():
+    articles = []
+    try:
+        with io.open(articles_FILE, 'r', encoding='utf-8') as file:
+            for line in file:
+                article = json.loads(line.strip())
+                articles.append(article)
+    except FileNotFoundError:
+        pass
+    return articles

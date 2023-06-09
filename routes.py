@@ -2,10 +2,9 @@ import re
 from bottle import route, view, template, request, redirect
 from datetime import datetime
 from module1 import load_reviews_from_file, save_review_to_file
-
+from articles import load_articles, save_article
+import json
 import time
-
-
 @route('/')
 @route('/home')
 @view('index')
@@ -66,21 +65,30 @@ def otzv():
     return template('otzv', reviews=reviews, year=datetime.now().year)
 
         
-def load_articles():
-    # Здесь можно вставить код загрузки статей
-    # из файла или другого источника данных
-    return []
 
-@route('/articles')
+@route('/articles', method='GET')
+@route('/articles', method='POST')
+@view('articles')
 def articles():
     articles = load_articles()
-    return template('articles.tpl', articles=articles)
 
-@route('/submit_article', method='POST')
-def submit_article():
-    author = request.forms.get('author')
-    text = request.forms.get('text')
-    # Здесь можно добавить код для сохранения статьи
-    # в файле или другом источнике данных
-    return 'Статья добавлена успешно'
+    if request.method == 'POST':
+        nickname = request.forms.get('nickname')
+        name = request.forms.get('name')
+        article = request.forms.get('article')
+        email = request.forms.get('email')
+        timestamp = datetime.now().strftime("%Y-%m-%d")
 
+        if len(article) > 1000:
+            return "Длина статьи не может превышать 1000 символов."
+
+        email_pattern = re.compile(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.(com|ru|org)$')
+
+        if not email_pattern.match(email):
+            return "Пожалуйста, введите действительный адрес электронной почты."
+
+        new_article = {'nickname': nickname, 'article': article, 'name': name, 'email': email, 'timestamp': timestamp}
+        save_article(new_article)
+        articles.append(new_article)
+
+    return template('articles', articles=articles, year=datetime.now().year)
