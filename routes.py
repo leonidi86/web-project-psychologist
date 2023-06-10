@@ -1,8 +1,8 @@
 import re
-from bottle import route, view, template, request, redirect
+from bottle import route, view, request, template, json_dumps
 from datetime import datetime
 from module1 import load_reviews_from_file, save_review_to_file
-from articles import load_articles, save_article
+from articles import save_article, load_articles
 import json
 import time
 @route('/')
@@ -64,31 +64,37 @@ def otzv():
 
     return template('otzv', reviews=reviews, year=datetime.now().year)
 
-        
+
+
+
+
+
 
 @route('/articles', method='GET')
 @route('/articles', method='POST')
 @view('articles')
 def articles():
     articles = load_articles()
+    error = None  # Add a variable to store the error message
 
     if request.method == 'POST':
         nickname = request.forms.get('nickname')
         name = request.forms.get('name')
         article = request.forms.get('article')
         email = request.forms.get('email')
-        timestamp = datetime.now().strftime("%Y-%m-%d")
-
-        if len(article) > 1000:
-            return "Длина статьи не может превышать 1000 символов."
+        timestamp = datetime.now().strftime("%Y-%m-%d") 
 
         email_pattern = re.compile(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.(com|ru|org)$')
 
         if not email_pattern.match(email):
-            return "Пожалуйста, введите действительный адрес электронной почты."
+            error = "Пожалуйста, введите действительный адрес электронной почты."
 
-        new_article = {'nickname': nickname, 'article': article, 'name': name, 'email': email, 'timestamp': timestamp}
-        save_article(new_article)
-        articles.append(new_article)
+        if not error:  # If no error, save the article
+            new_article = {'nickname': nickname, 'article': article, 'name': name, 'email': email, 'timestamp': timestamp}
+            save_article(new_article)
+            articles.append(new_article)
 
-    return template('articles', articles=articles, year=datetime.now().year)
+    return template('articles', articles=load_articles(), year=datetime.now().year, error=error) 
+
+
+

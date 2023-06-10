@@ -55,6 +55,36 @@ d {
     font-size: 22px;
 }
 
+.contan {
+    color: #0060b5;
+    font-size: 22px;
+    background-color: #3e77a959;
+}
+.contan2 {
+    color: #002a50;
+    font-size: 19px;
+    text-align: center;
+    background-color: #5f9ea033;
+}
+.contan3 {
+    color: #002a50;
+    font-size: 19px;
+    text-align: right;
+    background-color: #5f9ea033;
+}
+
+    .contan3 textarea {
+        min-width: 800px;
+        height: auto;
+        resize: vertical;
+    }
+
+.input_butt {
+    color: #002a50;
+    font-size: 19px;
+    text-align: right;
+    background-color: #5f9ea033;
+}
 
 input.button4 {
     position: relative;
@@ -66,7 +96,7 @@ input.button4 {
     text-shadow: 0 -1px rgba(0,0,0,.1);
     text-decoration: none;
     user-select: none;
-    padding: 3px 10px ;
+    padding: 3px 10px;
     outline: none;
     overflow: hidden;
     border: none;
