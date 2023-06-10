@@ -73,7 +73,7 @@
     <form name="articleForm" method="POST" action="/articles" onsubmit="return validateForm();" class="contan3" >
         <p><input type="text" size="50" id="nickname" name="nickname" placeholder="Ваше имя" required></p>
         <p><textarea rows="2" cols="50" id="name" name="name" placeholder="Название статьи"></textarea></p> 
-        <p><textarea  style="height: 373px; min-width: 1100px;" rows="2" cols="50" id="article" name="article" placeholder="Введите статью" required oninput="countCharacters()"></textarea></p> 
+        <p><textarea  style="height: 373px; min-width: 1090px;" rows="2" cols="50" id="article" name="article" placeholder="Введите статью" required oninput="countCharacters()"></textarea></p> 
         <p id="counter">2000/2000</p>
         <p><input type="text" size="50" id="email" name="email" placeholder="Ваша почта" required></p>
         <p><input class="input_butt" type="submit" value="Добавить отзыв"></p>
