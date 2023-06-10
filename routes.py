@@ -75,7 +75,7 @@ def otzv():
 @view('articles')
 def articles():
     articles = load_articles()
-    error = None  # Add a variable to store the error message
+    error = None  # Переменная для хранения сообщения об ошибке
 
     if request.method == 'POST':
         nickname = request.forms.get('nickname')
@@ -86,15 +86,26 @@ def articles():
 
         email_pattern = re.compile(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.(com|ru|org)$')
 
+        if len(article) > 2000:
+            error = "Длина статьи не может превышать 2000 символов."
+        elif not article.strip():
+            error = "Пожалуйста, заполните поле статьи."
+
+        if len(name) > 200:
+            error = "Длина названия статьи не может превышать 200 символов."
+        elif not name.strip():
+            error = "Пожалуйста, заполните поле названия статьи."
+
         if not email_pattern.match(email):
             error = "Пожалуйста, введите действительный адрес электронной почты."
+        elif not email.strip():
+            error = "Пожалуйста, заполните поле адреса электронной почты."
 
-        if not error:  # If no error, save the article
+        if not error:  # Если ошибок нет, сохраняем статью
             new_article = {'nickname': nickname, 'article': article, 'name': name, 'email': email, 'timestamp': timestamp}
             save_article(new_article)
             articles.append(new_article)
 
-    return template('articles', articles=load_articles(), year=datetime.now().year, error=error) 
-
+    return template('articles', articles=load_articles(), year=datetime.now().year)
 
 

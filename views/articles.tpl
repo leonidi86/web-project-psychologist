@@ -5,45 +5,53 @@
 <head>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-       function validateForm() {
-        var emailPattern = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
-        var nickname = document.forms["articleForm"]["nickname"].value;
-        var name = document.forms["articleForm"]["name"].value;
-        var article = document.forms["articleForm"]["article"].value;
-        var email = document.forms["articleForm"]["email"].value;
-        var textarea = document.getElementById("article");
+        function validateForm() {
+            var emailPattern = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
+            var nickname = document.forms["articleForm"]["nickname"].value;
+            var name = document.forms["articleForm"]["name"].value;
+            var article = document.forms["articleForm"]["article"].value;
+            var email = document.forms["articleForm"]["email"].value;
+            var textarea = document.getElementById("article");
 
-        if (nickname.trim() === "") {
-            alert("Пожалуйста, введите ваше имя.");
-            return false;
-        }
+            if (nickname.trim() === "") {
+                alert("Пожалуйста, введите ваше имя.");
+                return false;
+            }
 
-        if (name.trim() === "") {
-            alert("Пожалуйста, введите название статьи.");
-            return false;
-        }
-                if (article.length > 200) {
-            alert("Длина названия статьи не может превышать 200 символов.");
-            return false;
-        }
+            if (name.trim() === "") {
+                alert("Пожалуйста, введите название статьи.");
+                return false;
+            }
 
-        if (article.trim() === "") {
-            alert("Пожалуйста, введите статью.");
-            return false;
-        }
+            if (article.trim() === "") {
+                alert("Пожалуйста, введите статью.");
+                return false;
+            }
 
-        if (article.length > 2000) {
-            alert("Длина статьи не может превышать 2000 символов.");
-            return false;
-        }
+            if (article.length > 2000) {
+                alert("Длина статьи не может превышать 2000 символов.");
+                return false;
+            } else if (article.length > 0 && article.length <= 200) {
+                // Очистить поле ввода для статьи, если оно находится в правильном диапазоне
+                textarea.value = "";
+            }
 
-        if (!emailPattern.test(email)) {
-            alert("Пожалуйста, введите действительный адрес электронной почты.");
-            return false;
+            if (name.length > 200) {
+                alert("Длина названия статьи не может превышать 200 символов.");
+                return false;
+            }
+
+            if (!emailPattern.test(email)) {
+                alert("Пожалуйста, введите действительный адрес электронной почты.");
+                return false;
+            }
+
+            // Очистить поле ввода для названия статьи
+            document.forms["articleForm"]["name"].value = "";
+
+            alert("Спасибо за ваше предложение! Мы обязательно его рассмотрим и свяжемся с вами.");
+            return true;
         }
-         alert("Спасибо за ваше предложение! Мы обязательно его рассмотрим и свяжемся с вами.");
-        return true;
-    }
 
         function countCharacters() {
             var textarea = document.getElementById("article");
@@ -67,9 +75,6 @@
 % end
 
     <h2 style="text-align: right;">Оставить полезную статью:</h2>
-    % if error:
-        <p style="color: red;">{{ error }}</p>
-    % end
     <form name="articleForm" method="POST" action="/articles" onsubmit="return validateForm();" class="contan3" >
         <p><input type="text" size="50" id="nickname" name="nickname" placeholder="Ваше имя" required></p>
         <p><textarea rows="2" cols="50" id="name" name="name" placeholder="Название статьи"></textarea></p> 
