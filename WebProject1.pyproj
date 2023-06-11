@@ -19,6 +19,9 @@
     <Name>WebProject1</Name>
     <RootNamespace>WebProject1</RootNamespace>
     <InterpreterId>MSBuild|env4|$(MSBuildProjectFullPath)</InterpreterId>
+    <TestFramework>unittest</TestFramework>
+    <UnitTestPattern>test_*.py</UnitTestPattern>
+    <UnitTestRootDirectory>.</UnitTestRootDirectory>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -35,6 +38,9 @@
     </Compile>
     <Compile Include="routes.py" />
     <Compile Include="save_load.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="test_articles.py">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
