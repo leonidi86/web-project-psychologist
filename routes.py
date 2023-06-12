@@ -33,6 +33,7 @@ def about():
         message='Your application description page.',
         year=datetime.now().year
     )
+
 @route('/otzv', method='GET')
 @route('/otzv', method='POST')
 @view('otzv')
@@ -44,6 +45,7 @@ def otzv():
         review = request.forms.get('review')
         phone = request.forms.get('phone')
         email = request.forms.get('email')
+        rating = request.forms.get('rating')
         timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
         if len(review) > 300:
@@ -58,7 +60,14 @@ def otzv():
         if not email_pattern.match(email):
             return "Пожалуйста, введите действительный адрес электронной почты."
 
-        new_review = {'nickname': nickname, 'review': review, 'phone': phone, 'email': email, 'timestamp': timestamp}
+        new_review = {
+            'nickname': nickname,
+            'review': review,
+            'phone': phone,
+            'email': email,
+            'rating': rating,
+            'timestamp': timestamp
+        }
         save_review_to_file(new_review)
         reviews.append(new_review)
 

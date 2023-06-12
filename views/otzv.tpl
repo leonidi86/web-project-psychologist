@@ -33,9 +33,11 @@
             return false;
         }
     }
+
     function countCharacters() {
         var textarea = document.getElementById("review");
         var counter = document.getElementById("counter");
+        var input = document.getElementById("phone");
         var remaining = 300 - textarea.value.length;
 
         if (remaining < 0) {
@@ -47,23 +49,56 @@
 </script>
 </head>
 <body>
-<br>
+    <br>
     <h2>Оставить отзыв:</h2>
     <form name="reviewForm" method="POST" action="/otzv">
-            <p><input type="text" size="50" id="nickname" name="nickname" placeholder="Ваше имя" required></input></p>
-                <p><textarea rows="2" cols="50" id="review" name="review" placeholder="Описание" required oninput="countCharacters()"></textarea></p> 
-        <p id="counter">300/300</p>
-        <p><input type="text" size="50" id="phone" name="phone" placeholder="Ваша номер телефона" required></input></p>
-        <p><input type="text" size="50" id="email" name="email" placeholder="Ваша почта" required></input></p>
-        <p><input class="btn btn-default" type="submit" value="Добавить отзыв"></p>
+        <p><input type="text" size="50" id="nickname" name="nickname" placeholder="Ваше имя" required></p>
+
+        <p style="position: relative;">
+            <textarea rows="2" id="review" name="review" placeholder="Описание (максимальное кол-во символов 300)"
+                required oninput="countCharacters()"
+                style="min-width: 281px; max-width: 281px; width: 100%; min-height: 187px; max-height: 267px; height: 187px;"></textarea>
+            <span id="counter" style="position: absolute; bottom: 5px; right: 870px;">300/300</span>
+        </p>
+
+        <p><input type="text" size="50" id="phone" name="phone" placeholder="Ваш номер телефона" required></p>
+        <p><input type="text" size="50" id="email" name="email" placeholder="Ваша почта" required></p>
+
+        <div class="rating-area">
+            <input type="radio" id="star-5" name="rating" value="5">
+            <label for="star-5" title="Оценка «5»"></label>
+            <input type="radio" id="star-4" name="rating" value="4">
+            <label for="star-4" title="Оценка «4»"></label>
+            <input type="radio" id="star-3" name="rating" value="3">
+            <label for="star-3" title="Оценка «3»"></label>
+            <input type="radio" id="star-2" name="rating" value="2">
+            <label for="star-2" title="Оценка «2»"></label>
+            <input type="radio" id="star-1" name="rating" value="1">
+            <label for="star-1" title="Оценка «1»"></label>
+        </div>
+        <p><input type="submit" class="button4" value="Добавить отзыв" style="margin: 10px 0;"></p>
     </form>
 
-        <h2>Все отзывы:</h2>
-    <ul>
+    <h2>Все отзывы:</h2>
+    <list2>
+        <ul class="review-list">
         % for review in reviews:
-            <li><strong>{{ review['nickname'] }}</strong>: {{ review['review'] }} </strong>: {{ review['timestamp'] }} )</li> <!-- Список всех отзывов -->
-         % end
-    </ul>
-
+        <li><strong style="font-weight: bold;">{{ review['nickname'] }}</strong><br>
+        Дата: {{ review['timestamp'] }}<br>
+        Оценка: {{ review['rating'] }}<br>
+        Описание: {{ review['review'] }}</li>
+        <!-- Список всех отзывов -->
+        % end
+         </ul>
+    </list2>
+    
+    <style>
+        .review-list li {
+            word-wrap: break-word;
+            max-width: 400px;
+        }
+    </style>
+            
 </body>
+
 </html>

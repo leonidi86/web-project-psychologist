@@ -22,6 +22,10 @@
     <TestFramework>unittest</TestFramework>
     <UnitTestPattern>test_*.py</UnitTestPattern>
     <UnitTestRootDirectory>.</UnitTestRootDirectory>
+    <InterpreterId>MSBuild|env1|$(MSBuildProjectFullPath)</InterpreterId>
+    <TestFramework>unittest</TestFramework>
+    <UnitTestPattern>tests.py</UnitTestPattern>
+    <UnitTestRootDirectory>.</UnitTestRootDirectory>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -38,6 +42,9 @@
     </Compile>
     <Compile Include="routes.py" />
     <Compile Include="save_load.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="tests.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="test_articles.py">
